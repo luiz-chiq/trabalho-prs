@@ -2,9 +2,25 @@ import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
+import { Client } from './models/ClientModel'
+import Decimal from 'decimal.js'
+import { Invoice } from './models/InvoiceModel'
+import { PrismaClient } from '@prisma/client'
+import { ClientRepository } from './repositories/ClientRepository'
+// import { Model } from 'objection'
+// import Knex from 'knex'
+// import { knexConfig } from '../main/configs/knexfile'
+// import { createTables } from './configs/migrations'
+// import ClientRepository from './repositories/Client/ClientRepository'
 
+// const environment = process.env.NODE_ENV || 'development'
+// const knex = Knex(knexConfig[environment])
+
+let i = 0
+
+const prisma = new PrismaClient()
+// Model.knex(knex)
 function createWindow(): void {
-  // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 900,
     height: 670,
@@ -26,8 +42,6 @@ function createWindow(): void {
     return { action: 'deny' }
   })
 
-  // HMR for renderer base on electron-vite cli.
-  // Load the remote URL for development or the local html file for production.
   if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
     mainWindow.loadURL(process.env['ELECTRON_RENDERER_URL'])
   } else {
@@ -35,11 +49,15 @@ function createWindow(): void {
   }
 }
 
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
-app.whenReady().then(() => {
-  // Set app user model id for windows
+app.whenReady().then(async () => {
+  await prisma.$connect()
+  // try {
+  // await createTables(knex)
+
+  // } catch (err) {
+  //   console.error('Error creating tables:', err)
+  // }
+
   electronApp.setAppUserModelId('com.electron')
 
   // Default open or close DevTools by F12 in development
@@ -49,26 +67,58 @@ app.whenReady().then(() => {
     optimizer.watchWindowShortcuts(window)
   })
 
-  // IPC test
-  ipcMain.on('ping', () => console.log('pong'))
+  let clientRepository = new ClientRepository()
+  ipcMain.on('client', async () => {
+    // await prisma.$connect()
+    let a = new Client('luiz', 'a', '123', null)
+    i++
+
+    clientRepository.create(a)
+
+    // await prisma.$disconnect()
+    // ClientRepository.create(a)
+  })
+
+  ipcMain.on('product', async () => {
+    console.log(await clientRepository.findAll())
+    // try {
+    //   const clients = await prisma.client.findMany()
+    //   console.log(clients)
+    // } catch (error) {
+    //   console.error('Error fetching clients:', error)
+    //   throw error
+    // }
+    // console.log(new Product('a', new Decimal(4), 3))
+  })
+
+  let a: Invoice
+
+  ipcMain.on('invoice', () => {
+    // a = new Invoice(new Date('01-01-2024'), new Date('02-01-2024'))
+    console.log(a)
+  })
 
   createWindow()
 
   app.on('activate', function () {
-    // On macOS it's common to re-create a window in the app when the
-    // dock icon is clicked and there are no other windows open.
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
   })
 })
 
-// Quit when all windows are closed, except on macOS. There, it's common
-// for applications and their menu bar to stay active until the user quits
-// explicitly with Cmd + Q.
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit()
+    app.on('before-quit', async (event) => {
+      // try {
+      //   // await knex.destroy()
+      //   console.log('Database connection closed.')
+      // } catch (err) {
+      //   console.error('Error closing database connection:', err)
+      // }
+    })
   }
 })
 
-// In this file you can include the rest of your app"s specific main process
-// code. You can also put them in separate files and require them here.
+app.on('will-quit', async () => {
+  await prisma.$disconnect()
+})

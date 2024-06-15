@@ -18,11 +18,22 @@
     "build:unpack": "npm run build && electron-builder --dir",
     "build:win": "npm run build && electron-builder --win",
     "build:mac": "electron-vite build && electron-builder --mac",
-    "build:linux": "electron-vite build && electron-builder --linux"
+    "build:linux": "electron-vite build && electron-builder --linux",
+    "prisma:init": "npx prisma init --datasource-provider sqlite",
+    "prisma:migrations": "npx prisma migrate dev --name init",
+    "prisma:generate": "npx prisma generate",
+    "prisma:create": "yarn prisma:migrations && yarn prisma:generate"
   },
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.0",
-    "@electron-toolkit/utils": "^3.0.0"
+    "@electron-toolkit/utils": "^3.0.0",
+    "@prisma/client": "^5.15.0",
+    "@types/uuid": "^9.0.8",
+    "better-sqlite3": "^10.0.0",
+    "decimal.js": "^10.4.3",
+    "knex": "^3.1.0",
+    "objection": "^3.1.4",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@electron-toolkit/eslint-config-prettier": "^2.0.0",
