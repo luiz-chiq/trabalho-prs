@@ -22,7 +22,13 @@
   },
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.0",
-    "@electron-toolkit/utils": "^3.0.0"
+    "@electron-toolkit/utils": "^3.0.0",
+    "@prisma/client": "^5.15.0",
+    "@types/uuid": "^9.0.8",
+    "antd": "^5.18.1",
+    "decimal.js": "^10.4.3",
+    "react-router-dom": "^6.23.1",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@electron-toolkit/eslint-config-prettier": "^2.0.0",
