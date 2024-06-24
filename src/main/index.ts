@@ -47,14 +47,15 @@ app.whenReady().then(() => {
   const clientService = new ClientService()
   const operationService = new OperationService()
 
-  ipcMain.on('client:findAll', async (event) => {
-    try {
-      const clients = await clientService.getAllClients()
-      event.reply('client:findAll:response', clients)
-    } catch (error) {
-      console.error('Erro ao buscar clientes:', error)
-      event.reply('client:findAll:response', { error: 'Erro ao buscar clientes' })
-    }
+  ipcMain.on('client:create', async (_event, data) => {
+    console.log(data)
+    const client = new Client(
+      data.name,
+      data.address || '',
+      data.phone ? `${data.prefix} ${data.phone}` : ''
+    )
+
+    clientService.createClient(client)
   })
 
   ipcMain.on('operation:create', async (_event, data) => {
@@ -68,6 +69,16 @@ app.whenReady().then(() => {
     operationService.createOperation(operation)
   })
 
+  ipcMain.on('client:findAll', async (event) => {
+    try {
+      const clients = await clientService.getAllClients()
+      event.reply('client:findAll:response', clients)
+    } catch (error) {
+      console.error('Erro ao buscar clientes:', error)
+      event.reply('client:findAll:response', { error: 'Erro ao buscar clientes' })
+    }
+  })
+
   ipcMain.on('operation:findAll', async (event) => {
     try {
       const operations = await operationService.getAllOperations()
@@ -79,17 +90,6 @@ app.whenReady().then(() => {
       console.error('Erro ao buscar operações:', error)
       event.reply('operation:findAll:response', { error: 'Erro ao buscar operações' })
     }
-  })
-
-  ipcMain.on('client:create', async (_event, data) => {
-    console.log(data)
-    const client = new Client(
-      data.name,
-      data.address || '',
-      data.phone ? `${data.prefix} ${data.phone}` : ''
-    )
-
-    clientService.createClient(client)
   })
 
   createWindow()
