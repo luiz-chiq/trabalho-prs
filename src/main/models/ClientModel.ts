@@ -6,8 +6,8 @@ export class Client {
   address: string
   phone: string
 
-  constructor(name: string, address: string, phone: string, id?: string) {
-    this.uuid = id || uuidv4()
+  constructor(name: string, address: string, phone: string, uuid?: string) {
+    this.uuid = uuid || uuidv4()
     this.name = name
     this.address = address
     this.phone = phone
