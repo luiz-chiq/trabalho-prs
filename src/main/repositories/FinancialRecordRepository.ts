@@ -1,5 +1,5 @@
 import { FinancialRecord } from '../models/FinancialRecordModel'
-import { mapFinancialRecord } from './mapper/Mappers' // Suponha que você tenha colocado a função de mapeamento em um arquivo separado.
+import { mapFinancialRecord } from './mapper/Mappers'
 import prisma from '../config/prisma'
 
 export class FinancialRecordRepository {
@@ -8,10 +8,10 @@ export class FinancialRecordRepository {
       data: {
         uuid: financialRecord.uuid,
         date: financialRecord.date,
-        unitPrice: financialRecord.unitPrice.toString(), // Armazena como string no banco de dados
+        unitPrice: financialRecord.unitPrice.toString(),
         quantity: financialRecord.quantity,
         discount: financialRecord.discount,
-        totalPrice: financialRecord.totalPrice.toString(), // Armazena como string no banco de dados
+        totalPrice: financialRecord.totalPrice.toString(),
         operationType: financialRecord.operationType,
         operationName: financialRecord.operationName,
         operationId: financialRecord.operationId,
@@ -38,10 +38,10 @@ export class FinancialRecordRepository {
       where: { uuid: financialRecord.uuid },
       data: {
         date: financialRecord.date,
-        unitPrice: financialRecord.unitPrice.toString(), // Armazena como string no banco de dados
+        unitPrice: financialRecord.unitPrice.toString(),
         quantity: financialRecord.quantity,
         discount: financialRecord.discount,
-        totalPrice: financialRecord.totalPrice.toString(), // Armazena como string no banco de dados
+        totalPrice: financialRecord.totalPrice.toString(),
         operationType: financialRecord.operationType,
         operationName: financialRecord.operationName,
         operationId: financialRecord.operationId,

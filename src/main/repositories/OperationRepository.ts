@@ -1,5 +1,5 @@
 import { Operation } from '../models/OperationModel'
-import { mapOperation } from './mapper/Mappers' // Suponha que você tenha colocado a função de mapeamento em um arquivo separado.
+import { mapOperation } from './mapper/Mappers'
 import prisma from '../config/prisma'
 
 export class OperationRepository {
@@ -8,7 +8,7 @@ export class OperationRepository {
       data: {
         uuid: operation.uuid,
         name: operation.name,
-        price: operation.price.toString(), // Armazena como string no banco de dados
+        price: operation.price.toString(),
         type: operation.type
       }
     })
@@ -32,7 +32,7 @@ export class OperationRepository {
       where: { uuid: operation.uuid },
       data: {
         name: operation.name,
-        price: operation.price.toString(), // Armazena como string no banco de dados
+        price: operation.price.toString(),
         type: operation.type
       }
     })

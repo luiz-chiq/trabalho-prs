@@ -5,7 +5,7 @@ import { OperationType } from './enums/OperationType'
 interface OperationDTO {
   name: string
   uuid: string
-  price: string // Convertido para string
+  price: string
   type: OperationType
 }
 
@@ -26,17 +26,12 @@ export class Operation {
     return {
       name: this.name,
       uuid: this.uuid,
-      price: this.price.toString(), // Converte Decimal para string
+      price: this.price.toString(),
       type: this.type
     }
   }
 
   static fromDTO(dto: OperationDTO): Operation {
-    return new Operation(
-      dto.name,
-      new Decimal(dto.price), // Converte string de volta para Decimal
-      dto.type,
-      dto.uuid
-    )
+    return new Operation(dto.name, new Decimal(dto.price), dto.type, dto.uuid)
   }
 }
