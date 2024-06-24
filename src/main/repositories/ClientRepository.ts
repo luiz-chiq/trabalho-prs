@@ -1,8 +1,6 @@
-import { PrismaClient } from '@prisma/client'
 import { Client } from '../models/ClientModel'
 import { mapClient } from './mapper/Mappers'
-
-const prisma = new PrismaClient()
+import prisma from '../config/prisma'
 
 export class ClientRepository {
   async create(client: Client): Promise<Client> {
