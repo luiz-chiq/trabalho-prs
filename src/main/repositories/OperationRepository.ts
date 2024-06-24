@@ -1,8 +1,6 @@
-import { PrismaClient } from '@prisma/client'
 import { Operation } from '../models/OperationModel'
 import { mapOperation } from './mapper/Mappers' // Suponha que você tenha colocado a função de mapeamento em um arquivo separado.
-
-const prisma = new PrismaClient()
+import prisma from '../config/prisma'
 
 export class OperationRepository {
   async create(operation: Operation): Promise<Operation> {
