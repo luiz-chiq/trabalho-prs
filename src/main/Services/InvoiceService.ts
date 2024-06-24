@@ -12,15 +12,15 @@ export class InvoiceService {
     this.financialRecordRepository = new FinancialRecordRepository()
   }
 
-  async createInvoice(invoice: Invoice) {
+  async createInvoice(invoice: Invoice): Promise<Invoice> {
     return this.invoiceRepository.create(invoice)
   }
 
-  async getAllInvoices() {
+  async getAllInvoices(): Promise<Invoice[]> {
     return this.invoiceRepository.findAll()
   }
 
-  async getInvoiceById(uuid: string) {
+  async getInvoiceById(uuid: string): Promise<Invoice> {
     const invoice = await this.invoiceRepository.findById(uuid)
     if (!invoice) {
       throw new Error(`Invoice with UUID ${uuid} not found`)
@@ -28,19 +28,22 @@ export class InvoiceService {
     return invoice
   }
 
-  async updateInvoice(invoice: Invoice) {
+  async updateInvoice(invoice: Invoice): Promise<Invoice> {
     const invoiceResult = await this.invoiceRepository.findById(invoice.uuid)
     if (!invoiceResult) throw new Error(`Invoice with UUID ${invoice.uuid} not found`)
     return this.invoiceRepository.update(invoice)
   }
 
-  async deleteInvoice(uuid: string) {
+  async deleteInvoice(uuid: string): Promise<Invoice> {
     const invoice = await this.invoiceRepository.findById(uuid)
     if (!invoice) throw new Error(`Invoice with UUID ${uuid} not found`)
     return this.invoiceRepository.delete(uuid)
   }
 
-  async addFinancialRecord(financialRecord: FinancialRecord, invoiceId: string) {
+  async addFinancialRecord(
+    financialRecord: FinancialRecord,
+    invoiceId: string
+  ): Promise<FinancialRecord> {
     const invoice = await this.invoiceRepository.findById(invoiceId)
     if (!invoice) {
       throw new Error(`Invoice with UUID ${invoiceId} not found`)
