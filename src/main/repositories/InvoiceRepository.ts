@@ -1,13 +1,14 @@
 import { PrismaClient } from '@prisma/client'
 import { Invoice } from '../models/InvoiceModel'
+import { mapInvoice } from './mapper/Mappers'
 
 const prisma = new PrismaClient()
 
 export class InvoiceRepository {
-  async create(invoice: Invoice) {
-    return await prisma.invoice.create({
+  async create(invoice: Invoice): Promise<Invoice> {
+    const result = await prisma.invoice.create({
       data: {
-        id: invoice.uuid,
+        uuid: invoice.uuid,
         startDate: invoice.startDate,
         endDate: invoice.endDate,
         status: invoice.status,
@@ -15,30 +16,33 @@ export class InvoiceRepository {
         clientId: invoice.client.uuid
       }
     })
+    return mapInvoice(result)
   }
 
   async findAll() {
-    return await prisma.invoice.findMany({
+    const result = await prisma.invoice.findMany({
       include: {
         financialRecords: true,
         client: true
       }
     })
+    return result.map(mapInvoice)
   }
 
-  async findById(id: string) {
-    return await prisma.invoice.findUnique({
-      where: { id },
+  async findById(uuid: string): Promise<Invoice | null> {
+    const result = await prisma.invoice.findUnique({
+      where: { uuid: uuid },
       include: {
         financialRecords: true,
         client: true
       }
     })
+    return mapInvoice(result)
   }
 
-  async update(invoice: Invoice) {
-    return await prisma.invoice.update({
-      where: { id: invoice.uuid },
+  async update(invoice: Invoice): Promise<Invoice> {
+    const result = await prisma.invoice.update({
+      where: { uuid: invoice.uuid },
       data: {
         startDate: invoice.startDate,
         endDate: invoice.endDate,
@@ -47,11 +51,13 @@ export class InvoiceRepository {
         clientId: invoice.client.uuid
       }
     })
+    return mapInvoice(result)
   }
 
-  async delete(id: string) {
-    return await prisma.invoice.delete({
-      where: { id }
+  async delete(uuid: string): Promise<Invoice> {
+    const result = await prisma.invoice.delete({
+      where: { uuid: uuid }
     })
+    return mapInvoice(result)
   }
 }
