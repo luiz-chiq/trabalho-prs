@@ -1,7 +1,6 @@
 import React from 'react'
 import type { FormInstance } from 'antd'
 import { Button, Form, Input, Select, Space } from 'antd'
-import { useNavigate } from 'react-router-dom'
 import useIpc from '@renderer/hooks/UseIpc'
 import { PageHeader } from '@renderer/components/PageHeader'
 const { Option } = Select
@@ -40,8 +39,6 @@ const SubmitButton: React.FC<React.PropsWithChildren<SubmitButtonProps>> = ({ fo
 
 export const ClientForm: React.FC = () => {
   const [form] = Form.useForm()
-
-  const navigate = useNavigate()
 
   const options: React.ReactNode[] = []
 

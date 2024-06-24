@@ -1,10 +1,8 @@
-import { ArrowLeftOutlined, PlusOutlined } from '@ant-design/icons'
 import { CustomFloatButtom } from '@renderer/components/CustomFloatButton'
 import { PageHeader } from '@renderer/components/PageHeader'
 import useIpc from '@renderer/hooks/UseIpc'
-import { Button, Col, Flex, Row, Table, TableColumnsType, TableProps, Typography } from 'antd'
+import { Flex, Table, TableColumnsType, TableProps } from 'antd'
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 
 interface Client {
   name: string
@@ -14,8 +12,6 @@ interface Client {
 }
 
 export const ClientList = () => {
-  const navigate = useNavigate()
-
   const [clients, setClients] = useState<Client[]>([])
 
   const handleClients = (_event, clientsData: Client[]) => {
