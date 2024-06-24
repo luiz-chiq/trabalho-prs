@@ -17,9 +17,8 @@ export class Invoice {
     client: Client,
     startDate: Date,
     endDate: Date,
-    financialRecords?: FinancialRecord[],
-    totalAmount?: Decimal,
     status?: InvoiceStatus,
+    financialRecords?: FinancialRecord[],
     uuid?: string
   ) {
     this.uuid = uuid || uuidv4()
@@ -27,13 +26,14 @@ export class Invoice {
     this.startDate = startDate
     this.endDate = endDate
     this.financialRecords = financialRecords ? financialRecords : []
-    this.totalAmount = totalAmount ? totalAmount : this.calculateTotalAmount(this.financialRecords)
+    this.totalAmount = this.calculateTotalAmount(this.financialRecords)
     this.status = status ? status : InvoiceStatus.INCOMPLETE
   }
 
   private calculateTotalAmount(financialRecords: FinancialRecord[]): Decimal {
-    return financialRecords.reduce((acc, record) => {
+    this.totalAmount = financialRecords.reduce((acc, record) => {
       return acc.plus(record.totalPrice)
     }, new Decimal(0))
+    return this.totalAmount
   }
 }
