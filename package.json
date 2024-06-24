@@ -24,6 +24,7 @@
     "prisma:create": "yarn prisma:migrations && yarn prisma:generate"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.3.7",
     "@electron-toolkit/preload": "^3.0.0",
     "@electron-toolkit/utils": "^3.0.0",
     "@prisma/client": "^5.15.0",
