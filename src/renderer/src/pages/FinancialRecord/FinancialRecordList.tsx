@@ -37,6 +37,7 @@ export const FinancialRecordList: React.FC = () => {
       showSorterTooltip: { target: 'full-header' },
       onFilter: (value, record) => record.operationName.indexOf(value as string) === 0,
       sorter: (a, b) => a.operationName.length - b.operationName.length,
+      defaultSortOrder: 'descend',
       sortDirections: ['descend', 'ascend']
     },
     {
@@ -48,28 +49,24 @@ export const FinancialRecordList: React.FC = () => {
     {
       title: 'Preço unitário',
       dataIndex: 'unitPrice',
-      defaultSortOrder: 'descend',
       sorter: (a, b) => a.unitPrice - b.unitPrice,
       sortDirections: ['descend', 'ascend']
     },
     {
       title: 'Quantidade',
       dataIndex: 'quantity',
-      defaultSortOrder: 'descend',
       sorter: (a, b) => a.quantity - b.quantity,
       sortDirections: ['descend', 'ascend']
     },
     {
       title: 'Desconto',
       dataIndex: 'discount',
-      defaultSortOrder: 'descend',
       sorter: (a, b) => a.discount - b.discount,
       sortDirections: ['descend', 'ascend']
     },
     {
       title: 'Preço final',
       dataIndex: 'totalPrice',
-      defaultSortOrder: 'descend',
       sorter: (a, b) => a.totalPrice - b.totalPrice,
       sortDirections: ['descend', 'ascend']
     }
