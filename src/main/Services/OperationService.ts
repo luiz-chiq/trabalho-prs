@@ -8,15 +8,15 @@ export class OperationService {
     this.operationRepository = new OperationRepository()
   }
 
-  async createOperation(operation: Operation) {
+  async createOperation(operation: Operation): Promise<Operation> {
     return this.operationRepository.create(operation)
   }
 
-  async getAllOperations() {
+  async getAllOperations(): Promise<Operation[]> {
     return this.operationRepository.findAll()
   }
 
-  async getOperationById(uuid: string) {
+  async getOperationById(uuid: string): Promise<Operation> {
     const operation = await this.operationRepository.findById(uuid)
     if (!operation) {
       throw new Error(`Operation with UUID ${uuid} not found`)
@@ -24,13 +24,13 @@ export class OperationService {
     return operation
   }
 
-  async updateOperation(operation: Operation) {
+  async updateOperation(operation: Operation): Promise<Operation> {
     const operationResult = await this.operationRepository.findById(operation.uuid)
     if (!operationResult) throw new Error(`Operation with UUID ${operation.uuid} not found`)
     return this.operationRepository.update(operation)
   }
 
-  async deleteOperation(uuid: string) {
+  async deleteOperation(uuid: string): Promise<Operation> {
     const operationResult = await this.operationRepository.findById(uuid)
     if (!operationResult) throw new Error(`Operation with UUID ${uuid} not found`)
     return this.operationRepository.delete(uuid)
