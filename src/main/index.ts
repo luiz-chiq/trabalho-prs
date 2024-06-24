@@ -4,6 +4,7 @@ import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import prisma from './config/prisma'
 import { ClientService } from './Services/ClientService'
+import { OperationService } from './Services/OperationService'
 
 function createWindow(): void {
   const mainWindow = new BrowserWindow({
@@ -41,6 +42,7 @@ app.whenReady().then(() => {
   })
 
   const clientService = new ClientService()
+  const operationService = new OperationService()
 
   ipcMain.on('client:findAll', async (event) => {
     try {
@@ -49,6 +51,19 @@ app.whenReady().then(() => {
     } catch (error) {
       console.error('Erro ao buscar clientes:', error)
       event.reply('client:findAll:response', { error: 'Erro ao buscar clientes' })
+    }
+  })
+
+  ipcMain.on('operation:findAll', async (event) => {
+    try {
+      const operations = await operationService.getAllOperations()
+      event.reply(
+        'operation:findAll:response',
+        operations.map((operation) => operation.toDTO())
+      )
+    } catch (error) {
+      console.error('Erro ao buscar operações:', error)
+      event.reply('operation:findAll:response', { error: 'Erro ao buscar operações' })
     }
   })
 
