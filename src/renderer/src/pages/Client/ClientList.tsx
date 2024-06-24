@@ -24,25 +24,7 @@ export const ClientList = () => {
 
   const { send } = useIpc('client:findAll:response', handleClients)
 
-  // const ipcHandle = (): void => window.electron.ipcRenderer.send('client:findAll')
-
-  // useEffect(() => {
-  //   window.electron.ipcRenderer.on('client:findAll:response', (_event, clients) => {
-  //     if (clients.error) {
-  //       console.error(clients.error)
-  //     } else {
-  //       setClients(clients)
-  //       console.log(clients)
-  //     }
-  //   })
-
-  //   return () => {
-  //     window.electron.ipcRenderer.removeAllListeners('client:findAll:response')
-  //   }
-  // }, [])
-
   useEffect(() => {
-    // ipcHandle()
     send('client:findAll')
   }, [send])
 
@@ -59,12 +41,10 @@ export const ClientList = () => {
       title: 'Telefone',
       dataIndex: 'phone',
       defaultSortOrder: 'descend'
-      //   sorter: (a, b) => a.phone.le - b.age
     },
     {
       title: 'Endereço',
       dataIndex: 'address'
-      // onFilter: (value, record) => record.address.indexOf(value as string) === 0
     }
   ]
 
@@ -83,13 +63,6 @@ export const ClientList = () => {
         onChange={onChange}
         showSorterTooltip={{ target: 'sorter-icon' }}
       />
-      {/* <FloatButton
-        shape="circle"
-        type="primary"
-        style={{ right: 50, bottom: 50, height: 45, width: 45 }}
-        icon={<PlusOutlined />}
-        onClick={() => navigate('/createClient')}
-      /> */}
       <CustomFloatButtom path="/createClient" />
     </Flex>
   )
