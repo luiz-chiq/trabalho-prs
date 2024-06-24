@@ -3,6 +3,7 @@ import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import prisma from './config/prisma'
+import { ClientService } from './Services/ClientService'
 
 function createWindow(): void {
   const mainWindow = new BrowserWindow({
@@ -37,6 +38,18 @@ app.whenReady().then(() => {
   electronApp.setAppUserModelId('com.electron')
   app.on('browser-window-created', (_, window) => {
     optimizer.watchWindowShortcuts(window)
+  })
+
+  const clientService = new ClientService()
+
+  ipcMain.on('client:findAll', async (event) => {
+    try {
+      const clients = await clientService.getAllClients()
+      event.reply('client:findAll:response', clients)
+    } catch (error) {
+      console.error('Erro ao buscar clientes:', error)
+      event.reply('client:findAll:response', { error: 'Erro ao buscar clientes' })
+    }
   })
 
   createWindow()
