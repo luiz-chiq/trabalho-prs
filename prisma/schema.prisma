@@ -26,12 +26,12 @@ model FinancialRecord {
   operationName String
   operationId   String
   invoiceId     String  
-  operation     Operation    @relation(fields: [operationId], references: [id])
-  invoice       Invoice  @relation(fields: [invoiceId], references: [id])
+  operation     Operation    @relation(fields: [operationId], references: [uuid])
+  invoice       Invoice  @relation(fields: [invoiceId], references: [uuid])
 }
 
 model Invoice {
-  id               String            @id @default(uuid())
+  uuid               String            @id @default(uuid())
   startDate        DateTime
   endDate          DateTime
   status           String
@@ -42,7 +42,7 @@ model Invoice {
 }
 
 model Operation {
-  id              String            @id @default(uuid())
+  uuid              String            @id @default(uuid())
   name            String
   price           Decimal
   type            String
