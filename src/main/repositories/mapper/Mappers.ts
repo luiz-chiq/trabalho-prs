@@ -3,6 +3,8 @@ import { Client } from '../../models/ClientModel'
 import { Operation } from '../../models/OperationModel'
 import { OperationType } from '../../models/enums/OperationType'
 import { FinancialRecord } from '../../models/FinancialRecordModel'
+import { Invoice } from '../../models/InvoiceModel'
+import { InvoiceStatus } from '../../models/enums/InvoiceStatus'
 
 export const mapClient = (data: any): Client => {
   return new Client(data.name, data.address, data.phone, data.uuid)
@@ -27,5 +29,16 @@ export const mapFinancialRecord = (data: any): FinancialRecord => {
     data.invoiceId,
     data.uuid,
     new Decimal(data.totalPrice)
+  )
+}
+
+export const mapInvoice = (data: any): Invoice => {
+  return new Invoice(
+    data.client,
+    data.startDate,
+    data.endDate,
+    data.status as InvoiceStatus,
+    data.financialRecords,
+    data.uuid
   )
 }
