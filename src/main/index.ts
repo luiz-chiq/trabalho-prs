@@ -6,6 +6,8 @@ import prisma from './config/prisma'
 import { ClientService } from './Services/ClientService'
 import { OperationService } from './Services/OperationService'
 import { Client } from './models/ClientModel'
+import { Operation } from './models/OperationModel'
+import { OperationType } from './models/enums/OperationType'
 
 function createWindow(): void {
   const mainWindow = new BrowserWindow({
@@ -53,6 +55,17 @@ app.whenReady().then(() => {
       console.error('Erro ao buscar clientes:', error)
       event.reply('client:findAll:response', { error: 'Erro ao buscar clientes' })
     }
+  })
+
+  ipcMain.on('operation:create', async (_event, data) => {
+    console.log(data)
+    const operation = new Operation(
+      data.name,
+      data.price,
+      data.type === 'service' ? OperationType.SERVICE : OperationType.PRODUCT
+    )
+
+    operationService.createOperation(operation)
   })
 
   ipcMain.on('operation:findAll', async (event) => {
