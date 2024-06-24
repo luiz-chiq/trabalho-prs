@@ -1,53 +1,50 @@
 import { PrismaClient } from '@prisma/client'
 import { Operation } from '../models/OperationModel'
-import { OperationType } from '../models/enums/OperationType'
+import { mapOperation } from './mapper/Mappers' // Suponha que você tenha colocado a função de mapeamento em um arquivo separado.
 
 const prisma = new PrismaClient()
 
 export class OperationRepository {
-  async create(operation: Operation) {
-    return await prisma.operation.create({
+  async create(operation: Operation): Promise<Operation> {
+    const result = await prisma.operation.create({
       data: {
-        id: operation.uuid,
+        uuid: operation.uuid,
         name: operation.name,
-        price: operation.price,
+        price: operation.price.toString(), // Armazena como string no banco de dados
         type: operation.type
       }
     })
+    return mapOperation(result)
   }
 
   async findAll(): Promise<Operation[]> {
     const operations = await prisma.operation.findMany()
-    return operations.map((op) => new Operation(op.name, op.price, op.type as OperationType, op.id))
+    return operations.map(mapOperation)
   }
 
-  async findById(id: string): Promise<Operation | null> {
+  async findById(uuid: string): Promise<Operation | null> {
     const operation = await prisma.operation.findUnique({
-      where: { id }
+      where: { uuid: uuid }
     })
-    if (!operation) return null
-    return new Operation(
-      operation.name,
-      operation.price,
-      operation.type as OperationType,
-      operation.id
-    )
+    return operation ? mapOperation(operation) : null
   }
 
-  async update(operation: Operation) {
-    return await prisma.operation.update({
-      where: { id: operation.uuid },
+  async update(operation: Operation): Promise<Operation> {
+    const result = await prisma.operation.update({
+      where: { uuid: operation.uuid },
       data: {
         name: operation.name,
-        price: operation.price,
+        price: operation.price.toString(), // Armazena como string no banco de dados
         type: operation.type
       }
     })
+    return mapOperation(result)
   }
 
-  async delete(id: string) {
-    return await prisma.operation.delete({
-      where: { id }
+  async delete(uuid: string): Promise<Operation> {
+    const result = await prisma.operation.delete({
+      where: { uuid: uuid }
     })
+    return mapOperation(result)
   }
 }
