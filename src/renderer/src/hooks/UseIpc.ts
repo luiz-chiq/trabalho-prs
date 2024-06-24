@@ -2,7 +2,7 @@ import { useEffect, useCallback } from 'react'
 
 const { ipcRenderer } = window.electron
 
-const useIpc = (channel?: string, callback?: () => any) => {
+const useIpc = (channel?: string, callback?: (event: any, data: any) => any) => {
   if (channel && callback)
     useEffect(() => {
       ipcRenderer.on(channel, callback)
