@@ -1,8 +1,6 @@
-import { PrismaClient } from '@prisma/client'
 import { FinancialRecord } from '../models/FinancialRecordModel'
 import { mapFinancialRecord } from './mapper/Mappers' // Suponha que você tenha colocado a função de mapeamento em um arquivo separado.
-
-const prisma = new PrismaClient()
+import prisma from '../config/prisma'
 
 export class FinancialRecordRepository {
   async create(financialRecord: FinancialRecord): Promise<FinancialRecord> {
