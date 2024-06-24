@@ -5,6 +5,7 @@ import icon from '../../resources/icon.png?asset'
 import prisma from './config/prisma'
 import { ClientService } from './Services/ClientService'
 import { OperationService } from './Services/OperationService'
+import { Client } from './models/ClientModel'
 
 function createWindow(): void {
   const mainWindow = new BrowserWindow({
@@ -65,6 +66,17 @@ app.whenReady().then(() => {
       console.error('Erro ao buscar operações:', error)
       event.reply('operation:findAll:response', { error: 'Erro ao buscar operações' })
     }
+  })
+
+  ipcMain.on('client:create', async (_event, data) => {
+    console.log(data)
+    const client = new Client(
+      data.name,
+      data.address || '',
+      data.phone ? `${data.prefix} ${data.phone}` : ''
+    )
+
+    clientService.createClient(client)
   })
 
   createWindow()
