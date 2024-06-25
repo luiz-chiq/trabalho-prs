@@ -12,7 +12,13 @@ model Client {
   name     String
   address  String
   phone    String
-  invoices Invoice[]
+}
+
+model Operation {
+  uuid              String            @id @default(uuid())
+  name            String
+  price           Decimal
+  type            String
 }
 
 model FinancialRecord {
@@ -26,8 +32,6 @@ model FinancialRecord {
   operationName String
   operationId   String
   invoiceId     String  
-  operation     Operation    @relation(fields: [operationId], references: [uuid])
-  invoice       Invoice  @relation(fields: [invoiceId], references: [uuid])
 }
 
 model Invoice {
@@ -37,14 +41,6 @@ model Invoice {
   status           String
   totalAmount      Decimal
   clientId         String
-  client           Client            @relation(fields: [clientId], references: [uuid])
-  financialRecords FinancialRecord[]
 }
 
-model Operation {
-  uuid              String            @id @default(uuid())
-  name            String
-  price           Decimal
-  type            String
-  financialRecords FinancialRecord[]
-}
+
