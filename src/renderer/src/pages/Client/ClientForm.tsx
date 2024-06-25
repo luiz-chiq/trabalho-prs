@@ -1,41 +1,8 @@
 import React from 'react'
-import type { FormInstance } from 'antd'
 import { Button, Form, Input, Select, Space } from 'antd'
-import useIpc from '@renderer/hooks/UseIpc'
 import { PageHeader } from '@renderer/components/PageHeader'
+import { SubmitButton } from '@renderer/components/SubmitButton'
 const { Option } = Select
-
-interface SubmitButtonProps {
-  form: FormInstance
-}
-
-const SubmitButton: React.FC<React.PropsWithChildren<SubmitButtonProps>> = ({ form, children }) => {
-  const [submittable, setSubmittable] = React.useState<boolean>(false)
-
-  const { send } = useIpc()
-
-  const values = Form.useWatch([], form)
-
-  React.useEffect(() => {
-    form
-      .validateFields({ validateOnly: true })
-      .then(() => setSubmittable(true))
-      .catch(() => setSubmittable(false))
-
-    console.log(form.getFieldsValue())
-  }, [form, values])
-
-  return (
-    <Button
-      type="primary"
-      htmlType="button"
-      onClick={() => send('client:create', form.getFieldsValue())}
-      disabled={!submittable}
-    >
-      {children}
-    </Button>
-  )
-}
 
 export const ClientForm: React.FC = () => {
   const [form] = Form.useForm()
@@ -78,7 +45,9 @@ export const ClientForm: React.FC = () => {
         </Form.Item>
         <Form.Item>
           <Space>
-            <SubmitButton form={form}>Criar</SubmitButton>
+            <SubmitButton form={form} ipcChannel="client:create">
+              Criar
+            </SubmitButton>
             <Button htmlType="reset" danger>
               Apagar tudo
             </Button>

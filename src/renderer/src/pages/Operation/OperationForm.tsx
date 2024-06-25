@@ -1,35 +1,7 @@
 import React from 'react'
-import type { FormInstance } from 'antd'
 import { Button, Form, Input, InputNumber, Radio, Space } from 'antd'
 import { PageHeader } from '@renderer/components/PageHeader'
-
-interface SubmitButtonProps {
-  form: FormInstance
-}
-
-const SubmitButton: React.FC<React.PropsWithChildren<SubmitButtonProps>> = ({ form, children }) => {
-  const [submittable, setSubmittable] = React.useState<boolean>(false)
-
-  const ipcHandle = (): void =>
-    window.electron.ipcRenderer.send('operation:create', form.getFieldsValue())
-
-  const values = Form.useWatch([], form)
-
-  React.useEffect(() => {
-    form
-      .validateFields({ validateOnly: true })
-      .then(() => setSubmittable(true))
-      .catch(() => setSubmittable(false))
-
-    console.log(form.getFieldsValue())
-  }, [form, values])
-
-  return (
-    <Button type="primary" htmlType="button" onClick={ipcHandle} disabled={!submittable}>
-      {children}
-    </Button>
-  )
-}
+import { SubmitButton } from '@renderer/components/SubmitButton'
 
 export const OperationForm: React.FC = () => {
   const [form] = Form.useForm()
@@ -58,7 +30,9 @@ export const OperationForm: React.FC = () => {
         </Form.Item>
         <Form.Item>
           <Space>
-            <SubmitButton form={form}>Criar</SubmitButton>
+            <SubmitButton form={form} ipcChannel="operation:create">
+              Criar
+            </SubmitButton>
             <Button htmlType="reset" danger>
               Apagar tudo
             </Button>
