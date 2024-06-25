@@ -24,8 +24,6 @@ export const SubmitButton: React.FC<React.PropsWithChildren<SubmitButtonProps>> 
       .validateFields({ validateOnly: true })
       .then(() => setSubmittable(true))
       .catch(() => setSubmittable(false))
-
-    console.log(form.getFieldsValue())
   }, [form, values])
 
   return (
