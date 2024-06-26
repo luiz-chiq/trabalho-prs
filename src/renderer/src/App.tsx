@@ -16,10 +16,10 @@ const Menu: React.FC = () => {
           Listar clientes
         </Button>
         <Button htmlType="button" onClick={() => navigate('/operations')}>
-          Listar Operações
+          Listar serviço e produtos
         </Button>
         <Button htmlType="button" onClick={() => navigate('/financialRecords')}>
-          Listar Operações
+          Listar registros
         </Button>
       </Flex>
     </div>
