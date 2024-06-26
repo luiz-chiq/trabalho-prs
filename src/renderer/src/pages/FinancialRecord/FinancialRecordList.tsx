@@ -5,26 +5,30 @@ import { Table, TableColumnsType, TableProps } from 'antd'
 import { useEffect, useState } from 'react'
 
 interface FinancialRecord {
-  uuid: string
-  operationName: string
-  operationType: 'product' | 'service'
   date: string
-  unitPrice: number
-  quantity: number
   discount: number
+  operationId: string
+  operationName: string
+  operationType: 'Product' | 'Service'
+  quantity: number
   totalPrice: number
   invoiceId: string
-  operationId: string
+  unitPrice: number
+  uuid: string
 }
 
 export const FinancialRecordList: React.FC = () => {
   const [financialRecords, setFinancialRecords] = useState<FinancialRecord[]>([])
 
-  const handleFinancialRecord = (_event, data: FinancialRecord[]) => {
-    setFinancialRecords(data)
+  const handleFinancialRecord = (_event, data) => {
+    console.log(data)
+    console.log(JSON.parse(data))
+    setFinancialRecords(JSON.parse(data))
   }
 
-  const { send } = useIpc('client:findAll:response', handleFinancialRecord)
+  console.log(new Date('2023-03-10').toLocaleDateString())
+
+  const { send } = useIpc('financialRecord:findAll:response', handleFinancialRecord)
 
   useEffect(() => {
     send('financialRecord:findAll')
@@ -38,6 +42,12 @@ export const FinancialRecordList: React.FC = () => {
       onFilter: (value, record) => record.operationName.indexOf(value as string) === 0,
       sorter: (a, b) => a.operationName.length - b.operationName.length,
       defaultSortOrder: 'descend',
+      sortDirections: ['descend', 'ascend']
+    },
+    {
+      title: 'Data',
+      dataIndex: 'date',
+      sorter: (a, b) => a.date.length - b.date.length,
       sortDirections: ['descend', 'ascend']
     },
     {
