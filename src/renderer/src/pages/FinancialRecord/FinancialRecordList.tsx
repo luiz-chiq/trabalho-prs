@@ -1,6 +1,5 @@
 import { CustomFloatButtom } from '@renderer/components/CustomFloatButton'
 import { PageHeader } from '@renderer/components/PageHeader'
-import useIpc from '@renderer/hooks/UseIpc'
 import { Table, TableColumnsType, TableProps } from 'antd'
 import { useEffect, useState } from 'react'
 
@@ -18,21 +17,42 @@ interface FinancialRecord {
 }
 
 export const FinancialRecordList: React.FC = () => {
-  const [financialRecords, setFinancialRecords] = useState<FinancialRecord[]>([])
+  const [financialRecords, setFinancialRecords] = useState([])
 
-  const handleFinancialRecord = (_event, data) => {
-    console.log(data)
-    console.log(JSON.parse(data))
-    setFinancialRecords(JSON.parse(data))
-  }
+  // const handleFinancialRecord = (_event, data) => {
+  //   console.log(data)
+  //   setFinancialRecords(data.records)
+  // }
 
-  console.log(new Date('2023-03-10').toLocaleDateString())
+  // const { send } = useIpc('financialRecord:findAll:response', handleFinancialRecord)
 
-  const { send } = useIpc('financialRecord:findAll:response', handleFinancialRecord)
+  // useEffect(() => {
+  //   send('financialRecord:findAll')
+  // }, [send])
 
   useEffect(() => {
-    send('financialRecord:findAll')
-  }, [send])
+    const handleFinancialRecordsResponse = (event, data) => {
+      if (data.error) {
+        console.error(data.error)
+      } else {
+        setFinancialRecords(data)
+      }
+    }
+
+    window.electron.ipcRenderer.on(
+      'financialRecord:findAll:response',
+      handleFinancialRecordsResponse
+    )
+
+    window.electron.ipcRenderer.send('financialRecord:findAll')
+
+    return () => {
+      window.electron.ipcRenderer.removeListener(
+        'financialRecord:findAll:response',
+        handleFinancialRecordsResponse
+      )
+    }
+  }, [])
 
   const columns: TableColumnsType<FinancialRecord> = [
     {
@@ -77,6 +97,12 @@ export const FinancialRecordList: React.FC = () => {
     {
       title: 'Preço final',
       dataIndex: 'totalPrice',
+      sorter: (a, b) => a.totalPrice - b.totalPrice,
+      sortDirections: ['descend', 'ascend']
+    },
+    {
+      title: 'Cliente',
+      dataIndex: 'clientId',
       sorter: (a, b) => a.totalPrice - b.totalPrice,
       sortDirections: ['descend', 'ascend']
     }
