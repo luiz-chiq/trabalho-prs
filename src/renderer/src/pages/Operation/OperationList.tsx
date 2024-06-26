@@ -27,7 +27,7 @@ export const OperationList = () => {
     })
 
     return () => {
-      window.electron.ipcRenderer.removeAllListeners('client:findAll:response')
+      window.electron.ipcRenderer.removeAllListeners('operation:findAll:response')
     }
   }, [])
 
