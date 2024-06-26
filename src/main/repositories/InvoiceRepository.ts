@@ -18,22 +18,13 @@ export class InvoiceRepository {
   }
 
   async findAll() {
-    const result = await prisma.invoice.findMany({
-      include: {
-        financialRecords: true,
-        client: true
-      }
-    })
+    const result = await prisma.invoice.findMany()
     return result.map(mapInvoice)
   }
 
   async findById(uuid: string): Promise<Invoice | null> {
     const result = await prisma.invoice.findUnique({
-      where: { uuid: uuid },
-      include: {
-        financialRecords: true,
-        client: true
-      }
+      where: { uuid: uuid }
     })
     return mapInvoice(result)
   }
