@@ -12,7 +12,7 @@ export const CustomFloatButtom: React.FC<CustomFloatButtomProps> = ({ path }) =>
     <FloatButton
       shape="circle"
       type="primary"
-      style={{ right: 50, bottom: 50, height: 45, width: 45 }}
+      style={{ right: 50, bottom: 50, height: 50, width: 50 }}
       icon={<PlusOutlined />}
       onClick={() => navigate(path)}
     />
