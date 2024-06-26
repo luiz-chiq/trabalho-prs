@@ -109,6 +109,26 @@ app.whenReady().then(() => {
     }
   })
 
+  ipcMain.on('financialRecord:findAll', async (event) => {
+    try {
+      const financialRecords = await financialRecordService.getAllFinancialRecords()
+      let financialRecordsDto = financialRecords.map((record) => record.toDTO())
+
+      // Garante que o objeto é serializável antes de enviar
+      let serializableRecordsDto = ensureSerializable(financialRecordsDto)
+      event.reply('financialRecord:findAll:response', serializableRecordsDto)
+    } catch (error) {
+      console.error('Erro ao buscar registros financeiros:', error)
+      event.reply('financialRecord:findAll:response', {
+        error: 'Erro ao buscar registros financeiros'
+      })
+    }
+  })
+
+  function ensureSerializable(obj) {
+    return JSON.parse(JSON.stringify(obj))
+  }
+
   ipcMain.on('client&operation:findAll', async (event) => {
     try {
       const clients = await clientService.getAllClients()
