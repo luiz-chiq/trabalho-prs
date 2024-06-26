@@ -3,11 +3,13 @@ import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import prisma from './config/prisma'
-import { ClientService } from './Services/ClientService'
-import { OperationService } from './Services/OperationService'
+import { ClientService } from './services/ClientService'
+import { OperationService } from './services/OperationService'
+import { FinancialRecordService } from './services/FinancialRecordService'
 import { Client } from './models/ClientModel'
 import { Operation } from './models/OperationModel'
 import { OperationType } from './models/enums/OperationType'
+import { FinancialRecord } from './models/FinancialRecordModel'
 
 function createWindow(): void {
   const mainWindow = new BrowserWindow({
@@ -46,6 +48,7 @@ app.whenReady().then(() => {
 
   const clientService = new ClientService()
   const operationService = new OperationService()
+  const financialRecordService = new FinancialRecordService()
 
   ipcMain.on('client:create', async (_event, data) => {
     console.log(data)
