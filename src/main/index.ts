@@ -92,6 +92,23 @@ app.whenReady().then(() => {
     }
   })
 
+  ipcMain.on('client&operation:findAll', async (event) => {
+    try {
+      const clients = await clientService.getAllClients()
+      const operations = await operationService.getAllOperations()
+      const operationDto = operations.map((operation) => operation.toDTO())
+      event.reply('client&operation:findAll:response', {
+        clients: clients,
+        operations: operationDto
+      })
+    } catch (error) {
+      console.error('Erro ao buscar clientes e operações:', error)
+      event.reply('client&operation:findAll:response', {
+        error: 'Erro ao buscar clientes e operações'
+      })
+    }
+  })
+
   createWindow()
 
   app.on('activate', function () {
