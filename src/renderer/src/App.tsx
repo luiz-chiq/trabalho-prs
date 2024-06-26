@@ -12,15 +12,25 @@ const Menu: React.FC = () => {
 
   return (
     <div>
-      <Flex gap="middle" vertical style={{ width: '200px' }} justify="center" align="center">
+      <Flex
+        style={{ width: '100%', height: '90vh' }}
+        gap="middle"
+        vertical
+        justify="center"
+        align="center"
+      >
         <Typography.Title level={3}>Menu</Typography.Title>
-        <Button htmlType="button" onClick={() => navigate('/clients')}>
+        <Button htmlType="button" onClick={() => navigate('/clients')} style={{ width: 200 }}>
           Listar clientes
         </Button>
-        <Button htmlType="button" onClick={() => navigate('/operations')}>
+        <Button htmlType="button" onClick={() => navigate('/operations')} style={{ width: 200 }}>
           Listar serviço e produtos
         </Button>
-        <Button htmlType="button" onClick={() => navigate('/financialRecords')}>
+        <Button
+          htmlType="button"
+          onClick={() => navigate('/financialRecords')}
+          style={{ width: 200 }}
+        >
           Listar registros
         </Button>
       </Flex>
