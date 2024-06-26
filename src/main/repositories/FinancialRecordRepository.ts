@@ -4,14 +4,15 @@ import prisma from '../config/prisma'
 
 export class FinancialRecordRepository {
   async create(financialRecord: FinancialRecord): Promise<FinancialRecord> {
+    console.log(financialRecord)
     const result = await prisma.financialRecord.create({
       data: {
         uuid: financialRecord.uuid,
         date: financialRecord.date,
-        unitPrice: financialRecord.unitPrice.toString(),
+        unitPrice: financialRecord.unitPrice,
         quantity: financialRecord.quantity,
         discount: financialRecord.discount,
-        totalPrice: financialRecord.totalPrice.toString(),
+        totalPrice: financialRecord.totalPrice,
         operationType: financialRecord.operationType,
         operationName: financialRecord.operationName,
         operationId: financialRecord.operationId,
