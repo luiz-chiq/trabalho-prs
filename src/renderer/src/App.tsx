@@ -4,6 +4,8 @@ import { ClientForm } from './pages/Client/ClientForm'
 import { ClientList } from './pages/Client/ClientList'
 import { OperationForm } from './pages/Operation/OperationForm'
 import { OperationList } from './pages/Operation/OperationList'
+import { FinancialRecordList } from './pages/FinancialRecord/FinancialRecordList'
+import { FinancialRecordForm } from './pages/FinancialRecord/FinancialRecordForm'
 
 const Menu: React.FC = () => {
   const navigate = useNavigate()
@@ -35,6 +37,8 @@ export function App(): JSX.Element {
         <Route path="/clients" element={<ClientList />} />
         <Route path="/createOperation" element={<OperationForm />} />
         <Route path="/operations" element={<OperationList />} />
+        <Route path="/financialRecords" element={<FinancialRecordList />} />
+        <Route path="/createFinancialRecords" element={<FinancialRecordForm />} />
       </Routes>
     </Router>
   )
