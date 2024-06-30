@@ -21,17 +21,17 @@ const Menu: React.FC = () => {
       >
         <Typography.Title level={3}>Menu</Typography.Title>
         <Button htmlType="button" onClick={() => navigate('/clients')} style={{ width: 200 }}>
-          Listar clientes
+          Clientes
         </Button>
         <Button htmlType="button" onClick={() => navigate('/operations')} style={{ width: 200 }}>
-          Listar serviço e produtos
+          Serviços e produtos
         </Button>
         <Button
           htmlType="button"
           onClick={() => navigate('/financialRecords')}
           style={{ width: 200 }}
         >
-          Listar registros
+          Registros
         </Button>
       </Flex>
     </div>
