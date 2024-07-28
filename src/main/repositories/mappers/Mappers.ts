@@ -2,9 +2,9 @@ import Decimal from 'decimal.js'
 import { Client } from '../../models/ClientModel'
 import { Operation } from '../../models/OperationModel'
 import { OperationType } from '../../models/enums/OperationType'
-import { FinancialRecord } from '../../models/FinancialRecordModel'
 import { Invoice } from '../../models/InvoiceModel'
 import { InvoiceStatus } from '../../models/enums/InvoiceStatus'
+import { FinancialRecord } from '../../models/FinancialRecordModel'
 
 export const mapClient = (data: any): Client => {
   return new Client(data.name, data.address, data.phone, data.uuid)
@@ -25,10 +25,8 @@ export const mapFinancialRecord = (data: any): FinancialRecord => {
       data.operationId
     ),
     data.quantity,
-    data.clientId,
     data.invoiceId,
-    data.uuid,
-    new Decimal(data.totalPrice)
+    data.uuid
   )
 }
 
