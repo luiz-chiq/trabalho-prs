@@ -100,6 +100,7 @@ export const FinancialRecordForm: React.FC = () => {
             defaultValue={'service'}
             onChange={(value) => {
               handleOperationTypeChange(value.target.value)
+              form.setFieldValue('operationId', undefined)
             }}
           >
             <Radio.Button value="service">Serviço</Radio.Button>
