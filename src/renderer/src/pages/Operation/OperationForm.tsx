@@ -26,7 +26,7 @@ export const OperationForm: React.FC = () => {
           </Radio.Group>
         </Form.Item>
         <Form.Item name="price" label="Preço" rules={[{ required: true }]}>
-          <InputNumber />
+          <InputNumber min={0}/>
         </Form.Item>
         <Form.Item>
           <Space>
