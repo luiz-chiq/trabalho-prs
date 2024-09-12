@@ -30,7 +30,7 @@ export const OperationForm: React.FC = () => {
         </Form.Item>
         <Form.Item>
           <Space>
-            <SubmitButton form={form} ipcChannel="operation:create">
+            <SubmitButton form={form} ipcChannel="operation:create" navegateTo="/operations">
               Criar
             </SubmitButton>
             <Button htmlType="reset" danger>

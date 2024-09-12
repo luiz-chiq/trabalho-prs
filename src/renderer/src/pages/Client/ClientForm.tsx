@@ -46,7 +46,7 @@ export const ClientForm: React.FC = () => {
         </Form.Item>
         <Form.Item>
           <Space>
-            <SubmitButton form={form} ipcChannel="client:create">
+            <SubmitButton form={form} ipcChannel="client:create" navegateTo="/clients">
               Criar
             </SubmitButton>
             <Button htmlType="reset" danger>

@@ -161,7 +161,7 @@ export const FinancialRecordForm: React.FC = () => {
         <Form.Item>
           <Space>
             <Button onClick={() => console.log(form.getFieldsValue())}>aaa</Button>
-            <SubmitButton form={form} ipcChannel="financialRecord:create">
+            <SubmitButton form={form} ipcChannel="financialRecord:create" navegateTo="/financialRecords">
               Criar
             </SubmitButton>
             <Button htmlType="reset" danger>
