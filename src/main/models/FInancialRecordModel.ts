@@ -58,7 +58,7 @@ export class FinancialRecord {
   toDTO(): FinancialRecordDTO {
     return {
       uuid: this.uuid,
-      date: this.date.toISOString(),
+      date: this.date.toLocaleDateString(),
       unitPrice: this.unitPrice.toString(),
       quantity: this.quantity,
       discount: this.discount,
