@@ -72,19 +72,23 @@ app.whenReady().then(() => {
     operationService.createOperation(operation)
   })
 
-  ipcMain.on('financialRecord:create', async (_event, data) => {
-    const operation = await operationService.getOperationById(data.operationId)
-    console.log(operation)
-    const record = new FinancialRecord(
-      new Date(`${data.date.$y}-${data.date.$M}-${data.date.$D}`),
-      data.discount / 100,
-      operation,
-      data.quantity,
-      '0'
-    )
+  // TODO: change form page to send the necessary data
 
-    financialRecordService.createFinancialRecord(record)
-  })
+  // ipcMain.on('financialRecord:create', async (_event, data) => {
+  //   const operation = await operationService.getOperationById(data.operationId)
+  //   console.log(operation)
+  //   const record = new FinancialRecord(
+  //     new Date(`${data.date.$y}-${data.date.$M}-${data.date.$D}`),
+  //     data.discount / 100,
+  //     operation,
+  //     data.quantity,
+  //     data.clientId,
+  //     data.invoiceId
+
+  //   )
+
+  //   financialRecordService.createFinancialRecord(record)
+  // })
 
   ipcMain.on('client:findAll', async (event) => {
     try {
