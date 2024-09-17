@@ -37,10 +37,10 @@ export class FinancialRecord {
     quantity: number,
     clientId: string,
     invoiceId: string,
-    uuidid?: string,
+    uuid?: string,
     totalPrice?: Decimal
   ) {
-    this.uuid = uuidid || uuidv4()
+    this.uuid = uuid || uuidv4()
     this.date = date
     this.operationType = operation.type
     this.operationName = operation.name
