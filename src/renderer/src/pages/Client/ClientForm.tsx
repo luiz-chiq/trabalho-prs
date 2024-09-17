@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 import { Button, Form, Input, Select, Space } from 'antd'
 import { PageHeader } from '@renderer/components/PageHeader'
 import { SubmitButton } from '@renderer/components/SubmitButton'
@@ -7,7 +7,7 @@ const { Option } = Select
 export const ClientForm: React.FC = () => {
   const [form] = Form.useForm()
 
-  const options: React.ReactNode[] = []
+  const options: ReactNode[] = []
 
   for (let i = 1; i <= 99; i++) {
     options.push(
