@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { PropsWithChildren, useEffect, useState } from 'react'
 import type { FormInstance } from 'antd'
 import { Button, Form } from 'antd'
 import useIpc from '@renderer/hooks/UseIpc'
@@ -10,20 +10,20 @@ interface SubmitButtonProps {
   navegateTo?: string
 }
 
-export const SubmitButton: React.FC<React.PropsWithChildren<SubmitButtonProps>> = ({
+export const SubmitButton: React.FC<PropsWithChildren<SubmitButtonProps>> = ({
   form,
   ipcChannel,
   navegateTo,
   children
 }) => {
-  const [submittable, setSubmittable] = React.useState<boolean>(false)
+  const [submittable, setSubmittable] = useState<boolean>(false)
   const navigate = useNavigate()
 
   const { send } = useIpc()
 
   const values = Form.useWatch([], form)
 
-  React.useEffect(() => {
+  useEffect(() => {
     form
       .validateFields({ validateOnly: true })
       .then(() => setSubmittable(true))
