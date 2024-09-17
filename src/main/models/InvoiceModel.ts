@@ -25,9 +25,9 @@ export class Invoice {
     this.client = client
     this.startDate = startDate
     this.endDate = endDate
-    this.financialRecords = financialRecords ? financialRecords : []
+    this.financialRecords = financialRecords || []
     this.totalAmount = this.calculateTotalAmount(this.financialRecords)
-    this.status = status ? status : InvoiceStatus.INCOMPLETE
+    this.status = status || InvoiceStatus.INCOMPLETE
   }
 
   private calculateTotalAmount(financialRecords: FinancialRecord[]): Decimal {
