@@ -1,11 +1,11 @@
 import { Button, Flex, Typography } from 'antd'
 import { MemoryRouter as Router, Routes, Route, useNavigate } from 'react-router-dom'
-import { ClientForm } from './pages/Client/ClientForm'
-import { ClientList } from './pages/Client/ClientList'
-import { OperationForm } from './pages/Operation/OperationForm'
-import { OperationList } from './pages/Operation/OperationList'
-import { FinancialRecordList } from './pages/FinancialRecord/FinancialRecordList'
-import { FinancialRecordForm } from './pages/FinancialRecord/FinancialRecordForm'
+import { ClientForm } from './pages/client/ClientForm'
+import { ClientList } from './pages/client/ClientList'
+import { OperationForm } from './pages/operation/OperationForm'
+import { OperationList } from './pages/operation/OperationList'
+import { FinancialRecordList } from './pages/financialRecord/FinancialRecordList'
+import { FinancialRecordForm } from './pages/financialRecord/FinancialRecordForm'
 
 const Menu: React.FC = () => {
   const navigate = useNavigate()
